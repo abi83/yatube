@@ -1,0 +1,8 @@
+(env) root@dsde1032-21635:/etc/postgresql/10/main# su postgres
+postgres@dsde1032-21635:/etc/postgresql/10/main$ psql app
+
+
+app-# SELECT table_name FROM information_schema.tables  WHERE table_schema='public' ORDER BY table_name;
+или app=# \dt
+
+\q - выход
