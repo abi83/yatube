@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['krommclub.ru',
                  'www.krommclub.ru',
+                 '127.0.0.1',
                  ]
 
 
@@ -125,6 +126,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/admin/web/krommclub.ru/public_html/app/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
-MEDIA_ROOT = '/home/admin/web/krommclub.ru/public_html/app/media/'
+# on dev: /home/admin/web/krommclub.ru/public_html/app/static/'
+# on HP: C:\python\app\app\static
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media/'
+print(MEDIA_ROOT)
