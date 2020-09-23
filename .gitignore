@@ -31,3 +31,6 @@ pip-delete-this-directory.txt
 env/
 ENV/
 env.bak/
+
+#media
+media/

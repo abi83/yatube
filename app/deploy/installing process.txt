@@ -1,0 +1,8 @@
+1. Creating virtual environments
+in dir where .git is: python -m venv env
+2. Activating env:
+source env/Scripts/activate - win
+source env/bin/activate - linux
+3. pip install -r requirements.txt
+
+

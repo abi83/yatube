@@ -6,3 +6,4 @@ app-# SELECT table_name FROM information_schema.tables  WHERE table_schema='publ
 или app=# \dt
 
 \q - выход
+\! chcp 1251

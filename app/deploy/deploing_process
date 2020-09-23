@@ -431,7 +431,6 @@ DATABASES = {
 
 /home/admin/web/krommclub.ru/public_html/app/media/
 
-
 # the upstream component nginx needs to connect to
 	upstream django {
 	    server unix:///home/admin/web/krommclub.ru/public_html/app/uwsgi_nginx.sock; # for a file socket
@@ -466,15 +465,11 @@ DATABASES = {
 	}
 
 ln -s /home/admin/web/krommclub.ru/public_html/app/deploy/krommclub_ru_nginx.conf /etc/nginx/conf.d
-
-
 ln -s /home/admin/web/krommclub.ru/public_html/app/deploy/krommclub_ru_nginx.conf /etc/uwsgi/vassals/
 
 uwsgi --emperor /etc/uwsgi/vassals/krommclub_ru_nginx.conf
 
 /home/admin/web/krommclub.ru/public_html/app/uwsgi_nginx.sock
-
-
 
 	#krommclub_ru_uwsgi.ini 
 	[uwsgi]
