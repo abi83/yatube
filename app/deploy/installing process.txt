@@ -1,3 +1,7 @@
+0. pip3 install virtualenv
+apt-get install python3-venv
+
+
 1. Creating virtual environments
 in dir where .git is: python -m venv env
 2. Activating env:
