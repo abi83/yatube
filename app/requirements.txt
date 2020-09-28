@@ -1,6 +1,9 @@
 Django
 psycopg2
 
+uwsgi #тестирую
+
+
 # https://github.com/mediacloud/ultimate-sitemap-parser
 # requests!!!
 
