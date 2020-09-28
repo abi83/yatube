@@ -2,6 +2,30 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/bootstrap/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/bootstrap/js/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/external/sizzle/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/ajax/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/core/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/css/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/data/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/manipulation/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/traversing/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/src/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/posts/static/popper.js/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/bootstrap/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/bootstrap/js/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/external/sizzle/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/ajax/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/core/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/css/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/data/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/manipulation/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/traversing/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/jquery/src/var" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static/popper.js/dist" />
       <excludeFolder url="file://$MODULE_DIR$/env" />
     </content>
     <orderEntry type="inheritedJdk" />
