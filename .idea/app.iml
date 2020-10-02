@@ -31,6 +31,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="YaPractice" />
+    <orderEntry type="module" module-name="hw02_community" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="C:\python\app\app\requirements.txt" />
