@@ -29,5 +29,8 @@ class Post(models.Model):
                               on_delete=models.SET_NULL
                               )
 
+class Tag(models.Model):
+    title = models.CharField()
+
 
 

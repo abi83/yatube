@@ -11,6 +11,13 @@ import requests
 import bs4
 from usp.tree import sitemap_tree_for_homepage
 from sitemapparser import SiteMapParser
+from .ads_settings import headers
+
+# def get_correct_url(givven_url):
+#     givven_url.lower()
+#     url_modifiers = ['www.', 'https://', 'http://']
+#     givven_url.
+
 
 
 
@@ -74,17 +81,17 @@ def ultimate_parser():
                 print(f'i: {i}. one_page.url:', one_page.url)
                 print(f'i: {i}. one_page.mod:', one_page.last_modified)
 
+def SitemapFromSite(site:str):
+    return site + 'sitemap.xml'
+
 def main():
-    site = 'https://mediaohvat.ru/'
-    sm = SiteMapParser(site)
+    site = 'https://vikinora.ru/'
+    sm = SiteMapParser(SitemapFromSite(site))
     if sm.has_sitemaps():
         for one_sitemap in sm.get_sitemaps():
             print(one_sitemap)  # returns iterator of sitemapper.Sitemap instances
     else:
         print(sm.get_urls())  # returns iterator of sitemapper.Url instances
-
-
-
 
 
 

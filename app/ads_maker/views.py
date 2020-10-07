@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from .models import SiteMap, Site
 from .forms import NewSiteForm
@@ -8,7 +9,7 @@ from .forms import NewSiteForm
 def ads_maker(request):
     context = {}
 
-    sites = Site.objects.all()
+    sites = Site.objects.all().order_by('-updated_at')[:10]
     context['sites'] = {site.pk: site for site in sites}
 
     if request.method == 'POST':
@@ -20,6 +21,8 @@ def ads_maker(request):
             new_site = Site()
             new_site.url = form.cleaned_data['url']
             new_site.save()
+            messages.info(request,
+                          'Your password has been changed successfully!')
 
             # redirect to a new URL:
             return HttpResponseRedirect('/ads_maker/')
@@ -33,9 +36,3 @@ def ads_maker(request):
     context['form'] = form
 
     return render(request, 'ads_maker.html', {'context': context})
-
-def get_site(request):
-    # if this is a POST request we need to process the form data
-    # form = NewSiteForm()
-
-    return render(request, 'ads_maker.html', {'form': form})

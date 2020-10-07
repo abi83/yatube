@@ -2,6 +2,7 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/app/posts/static/bootstrap/dist" />
       <excludeFolder url="file://$MODULE_DIR$/app/posts/static/bootstrap/js/dist" />
       <excludeFolder url="file://$MODULE_DIR$/app/posts/static/jquery/dist" />
@@ -28,9 +29,8 @@
       <excludeFolder url="file://$MODULE_DIR$/app/static/popper.js/dist" />
       <excludeFolder url="file://$MODULE_DIR$/env" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (app)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="YaPractice" />
     <orderEntry type="module" module-name="hw02_community" />
   </component>
   <component name="PackageRequirementsSettings">

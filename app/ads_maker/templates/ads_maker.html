@@ -3,13 +3,11 @@
 {% block header %}Ads maker{% endblock %}
 {% block content %}
 
-some text
-
+In our base we already discovered some sites
     {% for key, value in context.sites.items %}
-    <h3>
-        {{ key }}
-    </h3>
-    <p>{{ value.url }}</p>
+    <h3>{{ forloop.counter }}. {{ value.url }}</h3>
+    <p>created: {{ value.created_at}}</p>
+    <p>updated: {{ value.updated_at}}</p>
     {% endfor %}
 
 Ad site
