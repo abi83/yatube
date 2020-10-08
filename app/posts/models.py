@@ -31,7 +31,7 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=20)
     posts = models.ManyToManyField('Post')
 
 
