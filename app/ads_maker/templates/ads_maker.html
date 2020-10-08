@@ -6,6 +6,7 @@
 In our base we already discovered some sites
     {% for key, value in context.sites.items %}
     <h3>{{ forloop.counter }}. {{ value.url }}</h3>
+    <p>Status: {{ value.status }}</p>
     <p>created: {{ value.created_at}}</p>
     <p>updated: {{ value.updated_at}}</p>
     {% endfor %}

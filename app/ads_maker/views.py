@@ -20,9 +20,9 @@ def ads_maker(request):
             # process the data in form.cleaned_data as required
             new_site = Site()
             new_site.url = form.cleaned_data['url']
+            new_site.check_status()
             new_site.save()
-            messages.info(request,
-                          'Your password has been changed successfully!')
+
 
             # redirect to a new URL:
             return HttpResponseRedirect('/ads_maker/')

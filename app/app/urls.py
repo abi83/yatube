@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from posts import views
 
 urlpatterns = [
+    path('', views.index_page, name = 'index-page'),
     path('admin/', admin.site.urls),
-    path('', include('posts.urls')),
-    path('group/', include('posts.urls')),
+    path('posts/', include('posts.urls')),
     path('ads_maker/', include('ads_maker.urls')),
 ]

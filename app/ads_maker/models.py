@@ -1,8 +1,11 @@
 # import requests
 # import datetime
 from django.db import models
+import requests
+from requests.exceptions import ConnectionError
 
-# from .ads_settings import headers
+
+from .ads_settings import headers
 
 
 class Site(models.Model):
@@ -22,6 +25,20 @@ class Site(models.Model):
     #     else:
     #         raise ConnectionError(f'Site {given_url} can not be reached')
 
+    def check_status(self):
+        try:
+            r = requests.get(str(self.url), headers=headers)
+        except ConnectionError:
+            self.status = 'xxx'
+            return
+
+        self.status = r.status_code
+
+    def get_sitemap(self):
+        sitemaps_list = []
+        sitemaps_list.append()
+
+
 
     def __str__(self):
         return self.url
@@ -33,6 +50,7 @@ class SiteMap(models.Model):
     site = models.ForeignKey(Site, blank=False, on_delete=models.CASCADE, related_name="sitemap_site")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_sm_index = models.BooleanField(null=True)
 
 
 

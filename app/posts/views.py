@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Post, Group
 
+def index_page(request):
+    return render(request, 'index.html')
+
 def posts_list(request):
-    latest = Post.objects.order_by('-pub_date')[:11]
-    return render(request, 'index.html', {'posts': latest})
+    latest = Post.objects.order_by('-pub_date')[:10]
+    return render(request, 'posts_list.html', {'posts': latest})
 
 def groups_list(request):
     ten_groups = Group.objects.all()[:10]

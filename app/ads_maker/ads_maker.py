@@ -9,9 +9,9 @@
 
 import requests
 import bs4
-from usp.tree import sitemap_tree_for_homepage
+# from usp.tree import sitemap_tree_for_homepage
 from sitemapparser import SiteMapParser
-from .ads_settings import headers
+from ads_settings import headers
 
 # def get_correct_url(givven_url):
 #     givven_url.lower()
@@ -21,8 +21,9 @@ from .ads_settings import headers
 
 
 
+
 def ads_tests():
-    headers = {'user-agent': 'ads_maker/0.0.1'}
+#    headers = {'user-agent': 'ads_maker/0.0.1'}
 
     file = open('output.log', 'a')
     file.write('One more run'+'\n')
@@ -86,12 +87,25 @@ def SitemapFromSite(site:str):
 
 def main():
     site = 'https://vikinora.ru/'
-    sm = SiteMapParser(SitemapFromSite(site))
-    if sm.has_sitemaps():
-        for one_sitemap in sm.get_sitemaps():
-            print(one_sitemap)  # returns iterator of sitemapper.Sitemap instances
-    else:
-        print(sm.get_urls())  # returns iterator of sitemapper.Url instances
+    # sm = SiteMapParser(SitemapFromSite(site))
+
+#    site = 'https://www.vikinora.ru/sitemap_iblock_11.xml'
+    try:
+        sm = SiteMapParser(site)
+    except:
+        print('Error')
+
+
+
+    # if sm.has_sitemaps():
+    #     for one_sitemap in sm.get_sitemaps():
+    #         print(one_sitemap)  # returns iterator of sitemapper.Sitemap instances
+    # else:
+    #     for one_page in sm.get_urls():
+    #         print(one_page)  # returns iterator of sitemapper.Url instances
+    #         print(f'page {one_page} type: ', type(one_page))
+    #         print(f'page {one_page} fields: ', one_page.fields)
+    #         print(f'page {one_page} loc type:', type(one_page.loc))
 
 
 
