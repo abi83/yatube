@@ -1,7 +1,7 @@
 Django
 psycopg2
 
-ultimate-sitemap-parser # https://github.com/mediacloud/ultimate-sitemap-parser 2 delete, i think
+# ultimate-sitemap-parser # https://github.com/mediacloud/ultimate-sitemap-parser 2 delete, i think
 
 site-map-parser
 lxml==4.4.1

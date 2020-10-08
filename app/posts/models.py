@@ -23,14 +23,16 @@ class Post(models.Model):
                                on_delete=models.CASCADE,
                                related_name='posts')
     group = models.ForeignKey('Group', parent_link=True,
-                              related_name='groups',
+                              related_name='group',
                               blank=True,
                               null=True,
                               on_delete=models.SET_NULL
                               )
 
+
 class Tag(models.Model):
     title = models.CharField()
+    posts = models.ManyToManyField('Post')
 
 
 
