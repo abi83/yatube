@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.shortcuts import render, redirect
+
 
 from .models import SiteMap, Site
 from .forms import NewSiteForm
