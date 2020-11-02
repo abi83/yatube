@@ -14,6 +14,7 @@ beautifulsoup4 # beautifulsoop
 
 # Useful and powerful utils for Django
 django-extensions
+ipython
 
 # git+git://github.com/sehmaschine/django-grappelli.git#egg=django-grappelli
 # git+git://github.com/django-mptt/django-mptt.git#egg=django-mptt

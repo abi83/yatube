@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'posts',
     'ads_maker',
 ]
@@ -145,3 +146,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media/'
+
+# Always use IPython for shell_plus
+SHELL_PLUS = "ipython"
+SHELL_PLUS_PRINT_SQL = True
