@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+
 
 
 from .models import SiteMap, Site
@@ -9,32 +11,21 @@ from .forms import NewSiteForm
 
 
 def ads_maker(request):
-    context = {}
+    sites = Site.objects.all()
+    form = NewSiteForm(request.POST or None)
+    paginator = Paginator(sites, 10)
+    page_number = request.GET.get('page', default=1)
+    sites = paginator.get_page(page_number)
+    context = {
+        'form': form,
+        'sites': sites,
+        'paginator': paginator,
+    }
+    if not form.is_valid():
+        return render(request, 'ads_maker.html', context)
 
-    sites = Site.objects.all().order_by('-updated_at')[:10]
-    context['sites'] = {site.pk: site for site in sites}
-
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = NewSiteForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            new_site = Site()
-            new_site.url = form.cleaned_data['url']
-            new_site.check_status()
-            new_site.save()
-
-
-            # redirect to a new URL:
-            return HttpResponseRedirect('/ads_maker/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NewSiteForm()
-
-
-
-    context['form'] = form
-
-    return render(request, 'ads_maker.html', {'context': context})
+    site = Site()
+    site.url = form.cleaned_data['url']
+    site.check_status()
+    site.save()
+    return render(request, 'ads_maker.html', context)

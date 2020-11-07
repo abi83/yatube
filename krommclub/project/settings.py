@@ -29,7 +29,6 @@ DEBUG = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['krommclub.ru',
-                 'www.krommclub.ru',
                  '127.0.0.1',
                  ]
 
