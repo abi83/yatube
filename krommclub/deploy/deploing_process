@@ -164,6 +164,7 @@ def application(env, start_response):
 	source /home/django/venv/bin/activate
 	pip install psycopg2
 
+
 38. Если необходимо перенести БД со старой на новую делается это так:
 
 	Шаг 1. Выполняется со старыми настройками DATABASES в settings.py
