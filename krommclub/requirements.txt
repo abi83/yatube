@@ -1,36 +1,27 @@
-Django
+attrs==19.3.0             # via pytest
+certifi==2019.9.11        # via requests
+chardet==3.0.4            # via requests
+django==2.2.6
 psycopg2
-
-# ultimate-sitemap-parser # https://github.com/mediacloud/ultimate-sitemap-parser 2 delete, i think
-
-site-map-parser
-lxml==4.4.1
-pytest-cov==2.8.1
-requests-mock==1.7.0
-python-dateutil==2.8.1
-
-requests # requests!!!
-beautifulsoup4 # beautifulsoop
+idna==2.8                 # via requests
+importlib-metadata==1.5.0  # via pluggy, pytest
+more-itertools==8.2.0     # via pytest
+packaging==20.1           # via pytest
+pillow==7.0.0
+pluggy==0.13.1            # via pytest
+py==1.8.1                 # via pytest
+pyparsing==2.4.6          # via packaging
+pytest-django==3.8.0
+pytest==5.3.5             # via pytest-django
+pytz==2019.3              # via django
+requests==2.22.0
+six==1.14.0               # via packaging
+sorl-thumbnail==12.6.3
+sqlparse==0.3.0           # via django
+urllib3==1.25.6           # via requests
+wcwidth==0.1.8            # via pytest
+zipp==2.2.0               # via importlib-metadata
 
 # Useful and powerful utils for Django
 django-extensions
 ipython
-
-# git+git://github.com/sehmaschine/django-grappelli.git#egg=django-grappelli
-# git+git://github.com/django-mptt/django-mptt.git#egg=django-mptt
-# git+git://github.com/krvss/django-social-auth.git#django-social-auth
-# git+git://github.com/gabrielhurley/django-wymeditor.git#django-wymeditor
-# #git+git://github.com/jtauber/django-mailer.git#django-mailer
-# git+git://github.com/tweepy/tweepy.git#tweepy
-# django-celery
-# django-debug-toolbar
-# django-pdb
-# python-memcached
-# xlrd
-# unidecode
-# anyjson
-# gunicorn
-# pillow
-# south
-# fabric
-# xlwt

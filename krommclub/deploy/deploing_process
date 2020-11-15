@@ -481,7 +481,7 @@ uwsgi --emperor /etc/uwsgi/vassals/krommclub_ru_nginx.conf
 	# Корневая папка проекта (полный путь)
 	chdir           = /home/admin/web/krommclub.ru/public_html/krommclub
 	# Django wsgi файл
-	module          = project.wsgi
+	module          = yatube.wsgi
 	# полный путь к виртуальному окружению
 	home            = /home/admin/web/krommclub.ru/public_html/env
 	# общие настройки
