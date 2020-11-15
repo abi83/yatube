@@ -5,7 +5,9 @@ python manage.py shell_plus --print-sql
 
 
 app-# SELECT table_name FROM information_schema.tables  WHERE table_schema='public' ORDER BY table_name;
-или app=# \dt
-
+или app=#
+\l - list databases
+\c <database_name>
+\dt - list tables
 \q - выход
 \! chcp 1251
