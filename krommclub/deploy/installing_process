@@ -1,0 +1,6 @@
+1. git clone https://github.com/abi83/krommclub.ru
+2. python -m virtualenv venv
+3. source venv/bin/activate
+4. cd krommclub
+5. pip3 install -r requirements.txt
+6.
