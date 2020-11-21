@@ -30,6 +30,7 @@ CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['krommclub.ru',
                  '127.0.0.1',
+                 '185.20.225.250',
                  "testserver",
                  ]
 
