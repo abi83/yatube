@@ -88,28 +88,28 @@ WSGI_APPLICATION = 'yatube.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'app',
-            'USER': 'abi83',
-            'PASSWORD': 'GFhjkm83',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
+# if DEBUG:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'krommclub.ru',
+        'USER': 'abi83',
+        'PASSWORD': 'GFhjkm83',
+        'HOST': 'localhost',
+        'PORT': '',
     }
-elif not DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'krommclub',
-            'USER': 'abi83',
-            'PASSWORD': 'GFhjkm83',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
+}
+# elif not DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'krommclub',
+#             'USER': 'abi83',
+#             'PASSWORD': 'GFhjkm83',
+#             'HOST': 'localhost',
+#             'PORT': '',
+#         }
+#     }
 
 CACHES = {
     'default': {
