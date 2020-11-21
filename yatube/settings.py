@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'yatube.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'krommclub.ru',
+        'NAME': 'krommclub',
         'USER': 'abi83',
         'PASSWORD': 'GFhjkm83',
         'HOST': 'localhost',
