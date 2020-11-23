@@ -1,6 +1,5 @@
-import os
-
 import environ
+import os
 
 env = environ.Env(
     DEBUG=(bool, False))  # false default
