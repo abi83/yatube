@@ -1,9 +1,9 @@
-django==2.2.6
+django==2.2.13
 pytz==2020.4              # via django
 sqlparse==0.4.1           # via django
 
 sorl-thumbnail==12.6.3    # images
-pillow==7.0.0             # images
+pillow>=7.1.0             # images
 
 django-environ            #.env file manager
 
