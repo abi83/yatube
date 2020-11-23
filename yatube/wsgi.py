@@ -12,8 +12,7 @@ import environ
 
 from django.core.wsgi import get_wsgi_application
 
-env = environ.Env(
-    DEBUG=(bool, False))  # false default
+env = environ.Env()
 environ.Env.read_env(env_file='./.env')
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', env('SETTINGS_MODULE'))

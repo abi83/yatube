@@ -26,8 +26,8 @@ urlpatterns += [
     path('', include('posts.urls')),
 ]
 
-handler404 = Handler404.as_view() # noqa
-handler500 = Handler500.as_view() # noqa
+handler404 = Handler404.as_view()  # noqa
+handler500 = Handler500.as_view()  # noqa
 
 if settings.DEBUG:
     import debug_toolbar

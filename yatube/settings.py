@@ -1,11 +1,9 @@
 import os
 
 import environ
-# from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env(
     DEBUG=(bool, False))  # false default
-# reading .env file
 environ.Env.read_env(env_file='./.env')
 
 

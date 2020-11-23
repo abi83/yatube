@@ -26,6 +26,7 @@ pip-delete-this-directory.txt
 # Environments
 .env
 env/
+venv/
 ENV/
 env.bak/
 .idea
