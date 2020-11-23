@@ -1,9 +1,7 @@
 import os
-import tempfile
 from shutil import rmtree
 from uuid import uuid1
 
-from PIL import Image
 from django.conf import settings
 from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -31,9 +29,9 @@ class ViewsTests(TestCase):
         settings.MEDIA_ROOT = test_view_media_root
         cls.unauthorized_client = Client()
         cls.first_user = User.objects.create_user(
-            username=str(uuid1()),
-            first_name=str(uuid1()),
-            last_name=str(uuid1()),
+            username=str(uuid1())[:25],
+            first_name=str(uuid1())[:25],
+            last_name=str(uuid1())[:25],
         )
         cls.first_group = Group.objects.create(
             title=str(uuid1()),
@@ -45,15 +43,15 @@ class ViewsTests(TestCase):
             group=cls.first_group,
             author=cls.first_user,
         )
-        temp_file = tempfile.NamedTemporaryFile(
-            suffix='.jpg', prefix='test_temp_image_',
-            dir='test_files', delete=False)
-        Image.new("RGB", (200, 200), (255, 0, 0, 0)).save(temp_file)
-        with open(temp_file.name, 'rb') as image:
-            cls.first_post.image = SimpleUploadedFile(
-                    name='test_pic_name.jpg',
-                    content=image.read(),
-                    content_type='image/jpeg')
+        small_gif = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+            b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+            b'\x02\x4c\x01\x00\x3b'
+        )
+        cls.first_post.image = SimpleUploadedFile(
+                name=str(uuid1()) + '.gif',
+                content=small_gif,
+                content_type='image/gif')
         cls.first_post.save()
         cls.post_check_urls = [
             reverse('posts'),

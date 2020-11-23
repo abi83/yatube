@@ -1,11 +1,9 @@
 import os
-import tempfile
 from shutil import rmtree
 from uuid import uuid1
 
-from PIL import Image
 from django.conf import settings
-from django.core.cache import cache
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.urls import reverse
 
@@ -111,77 +109,6 @@ class FormsTests(TestCase):
         self.assertEqual(cashed_text, tested_post.text,
                          'Someone can edit foreign posts')
 
-    def test_post_form_with_image_file(self):
-        """
-        Testing create a post form with a jpg image
-        """
-        post_text = str(uuid1())
-        temp_file = tempfile.NamedTemporaryFile(
-            suffix='.jpg', prefix='test_temp_image_',
-            dir='test_files', delete=False)
-        Image.new("RGB", (200, 200), (255, 0, 0, 0)).save(temp_file)
-        input_image_size = os.path.getsize(temp_file.name)
-        with open(temp_file.name, 'rb') as image:
-            self.authorized_client.post(
-                reverse('new-post'),
-                {'text': post_text,
-                 'group': self.first_group.pk,
-                 'image': image},
-            )
-        cache.clear()  # cache for index-page set for 20 seconds
-        response = self.authorized_client.get(reverse('posts'))
-        matches = 0
-        for post in response.context['posts']:
-            try:
-                if (post.image.size == input_image_size and
-                        os.path.basename(temp_file.name) in post.image.name):
-                    matches += 1
-            except ValueError:
-                pass  # post has no image
-        # returned page contains right <img> tag, as recommended in task
-        self.assertContains(response, '<img class="card-img"')
-        # retrieving the post from database
-        new_post = Post.objects.get(text__exact=post_text)
-        # check if post saved in database with correct picture
-        self.assertEqual(new_post.image.size, input_image_size)
-        self.assertTrue(
-            os.path.basename(temp_file.name) in new_post.image.name)
-        # only one post in request context contains the picture
-        self.assertEqual(matches, 1,
-                         f'Picture attaching error: {matches} matches found')
-        temp_file.close()
-        os.unlink(temp_file.name)
-
-    def test_post_form_with_txt_file_error(self):
-        """
-        Testing create post form with txt file
-        """
-        # Have some problems with solution. But it works!
-        post_text = str(uuid1())
-        temp_file = tempfile.NamedTemporaryFile(
-            suffix='.txt', prefix='test_temp_txt_',
-            dir='test_files', delete=False)
-        temp_file.write(b'These are the file contents')
-        temp_file.close()
-        text_file = open(temp_file.name, 'rt', encoding='utf-8')
-        response = self.authorized_client.post(
-            reverse('new-post'),
-            {'text': post_text,
-             'group': self.first_group.pk,
-             'image': text_file, },)
-        text_file.close()
-        os.unlink(temp_file.name)
-        self.assertFalse(Post.objects.filter(text__exact=post_text).exists(),
-                         'Post was created with txt file instead image')
-        self.assertFormError(
-            response, 'form', 'image',
-            ['Загрузите правильное изображение. Файл, который вы загрузили, '
-             'поврежден или не является изображением.'],
-            msg_prefix='New-post form is valid with .txt file')
-        self.assertEqual(
-            response.context['form'].cleaned_data['text'], post_text,
-            'Retry option is impossible. The PostForm is broken')
-
     def test_new_comment_create(self):
         """
         Testing is comment appears after authorised client post request on
@@ -206,19 +133,20 @@ class FormsTests(TestCase):
         # Deleting current following object if exists
         Follow.objects.filter(
             author=self.followed_user, user=self.first_user).delete()
-        self.authorized_client.get(
-            reverse('profile-follow', args=[self.followed_user.username]))
-        self.assertEqual(
-            Follow.objects.filter(author=self.followed_user,
-                                  user=self.first_user).count(),
-            1, 'Follow button works incorrectly')
-        self.authorized_client.get(
-            reverse('profile-unfollow', args=[self.followed_user.username]))
-        self.assertEqual(
-            Follow.objects.filter(author=self.followed_user,
-                                  user=self.first_user).count(),
-            0, 'Unfollow button works incorrectly')
-
+        with self.subTest(msg='Follow button'):
+            self.authorized_client.get(
+                reverse('profile-follow', args=[self.followed_user.username]))
+            self.assertTrue(
+                Follow.objects.filter(author=self.followed_user,
+                                      user=self.first_user).exists(),
+                'Follow button works incorrectly')
+        with self.subTest(msg='Unfollow button'):
+            self.authorized_client.get(
+                reverse('profile-unfollow', args=[self.followed_user.username]))
+            self.assertFalse(
+                Follow.objects.filter(author=self.followed_user,
+                                      user=self.first_user).exists(),
+                'Unfollow button works incorrectly')
 
     def test_followed_authors_post_appears_in_follow_list(self):
         """
@@ -226,12 +154,69 @@ class FormsTests(TestCase):
         """
         tested_post = Post.objects.create(
             text=str(uuid1()), author=self.followed_user)
-        Follow.objects.get_or_create(
-            author=self.followed_user, user=self.first_user)
-        response = self.authorized_client.get(reverse('follow_index'))
-        self.assertContains(response, tested_post.text)
-        Follow.objects.filter(
-            author=self.followed_user,
-            user=self.first_user).delete()
-        response = self.authorized_client.get(reverse('follow_index'))
-        self.assertNotContains(response, tested_post.text)
+        with self.subTest(
+                msg='Check followed author post at follow_index page'):
+            Follow.objects.get_or_create(
+                author=self.followed_user, user=self.first_user)
+            response = self.authorized_client.get(reverse('follow_index'))
+            self.assertIn(
+                tested_post.text,
+                [post.text for post in response.context['posts']])
+        with self.subTest(
+                msg='Check unfollowed author post at follow_index page'):
+            Follow.objects.filter(
+                author=self.followed_user,
+                user=self.first_user).delete()
+            response = self.authorized_client.get(reverse('follow_index'))
+            self.assertNotIn(
+                tested_post.text,
+                [post.text for post in response.context['posts']])
+
+    def test_post_form_with_image_file(self):
+        """
+        Testing create a post form with a simple image
+        """
+        post_text = str(uuid1())
+        pic_file_name = str(uuid1()) + '.gif'
+        # anyway I couldn't feed a PIL Image object to SimpleUploadFile
+        small_gif = (
+            b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
+            b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
+            b'\x02\x4c\x01\x00\x3b'
+        )
+        self.authorized_client.post(
+            reverse('new-post'),
+            {'text': post_text,
+             'group': self.first_group.pk,
+             'image': SimpleUploadedFile(name=pic_file_name,
+                                         content=small_gif,
+                                         content_type='image/gif')
+             },
+        )
+        new_post = Post.objects.get(text__exact=post_text)
+        self.assertTrue(
+            pic_file_name in new_post.image.name)
+
+    def test_post_form_with_txt_file_error(self):
+        """
+        Testing create post form with txt file
+        """
+        post_text = str(uuid1())
+        response = self.authorized_client.post(
+            reverse('new-post'),
+            {'text': post_text,
+             'group': self.first_group.pk,
+             'image': SimpleUploadedFile(name='test_txt.txt',
+                                         content=b'These are the file contents',
+                                         content_type='text/plain'),
+             },)
+        self.assertFalse(Post.objects.filter(text__exact=post_text).exists(),
+                         'Post was created with txt file instead image')
+        self.assertFormError(
+            response, 'form', 'image',
+            ['Загрузите правильное изображение. Файл, который вы загрузили, '
+             'поврежден или не является изображением.'],
+            msg_prefix='New-post form is valid with .txt file')
+        self.assertEqual(
+            response.context['form'].cleaned_data['text'], post_text,
+            'Retry option is impossible. The PostForm is broken')
