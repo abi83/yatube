@@ -8,9 +8,14 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/wsgi/
 """
 
 import os
+import environ
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yatube.settings')
+env = environ.Env(
+    DEBUG=(bool, False))  # false default
+environ.Env.read_env(env_file='./.env')
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', env('SETTINGS_MODULE'))
 
 application = get_wsgi_application()

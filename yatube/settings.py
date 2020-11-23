@@ -1,12 +1,12 @@
 import os
 
 import environ
-from django.core.exceptions import ImproperlyConfigured
+# from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env(
     DEBUG=(bool, False))  # false default
 # reading .env file
-environ.Env.read_env()
+environ.Env.read_env(env_file='./.env')
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,11 +17,7 @@ DEBUG = env.bool('DEBUG')
 
 CSRF_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['krommclub.ru',
-                 '127.0.0.1',
-                 '185.20.225.250',
-                 "testserver",
-                 ]
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users',
@@ -115,12 +111,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = '/'
-
-# load special local or production settings
-try:
-    if env('DEPLOY') == 'local':
-        from .local_settings import *
-    elif env('DEPLOY') == 'prod':
-        from .prod_settings import *
-except ImproperlyConfigured:
-    pass
