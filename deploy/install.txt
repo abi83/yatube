@@ -8,4 +8,5 @@ https://www.digitalocean.com/community/tutorials/how-to-serve-django-application
 7.  Create and configure your database or use sqlite3 by default
 8.  python manage.py migrate
 9.  python manage.py createsuperuser
-10. run tests: python manage.py test
+10. python manage.py collectstatic
+11. run tests: python manage.py test

@@ -152,16 +152,16 @@ class GroupPosts(View):
 
 
 class ItemsListMixin:
-    query_set = None
+    queryset = None
     qs_name: str = None
     template: str = None
 
     def get(self, request):
         """
-        Make paginated context dictionary for the list of items self.query_set
+        Make paginated context dictionary for the list of items self.queryset
         and calling render function for it with self.template
         """
-        paginator = Paginator(self.query_set, 10)
+        paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page', 1)
         paginated_qs = paginator.get_page(page_number)
         return render(request, self.template, {
@@ -172,20 +172,20 @@ class ItemsListMixin:
 
 
 class GroupsList(ItemsListMixin, View):
-    query_set = Group.objects.filter(active=True, )
+    queryset = Group.objects.filter(active=True, )
     qs_name = 'groups'
     template = 'posts/groups_list.html'
 
 
 class ProfilesList(ItemsListMixin, View):
-    query_set = User.objects.exclude(posts=None, )
+    queryset = User.objects.exclude(posts=None, )
     qs_name = 'users'
     template = 'posts/profiles_list.html'
 
 
 @method_decorator(cache_page(20, key_prefix='index_page'), name='dispatch')
 class IndexList(ItemsListMixin, View):
-    query_set = Post.objects.filter(active=True,
+    queryset = Post.objects.filter(active=True,
                                     ).select_related('author', 'group')
     qs_name = 'posts'
     template = 'posts/index.html'
@@ -193,11 +193,8 @@ class IndexList(ItemsListMixin, View):
 
 class FollowList(LoginRequiredMixin, ItemsListMixin, View):
     def dispatch(self, request, *args, **kwargs):
-        following = Follow.objects.filter(
-            user__id=request.user.id
-        ).select_related('author')
-        self.query_set = Post.objects.filter(
-            author__in=[f.author for f in following]
+        self.queryset = Post.objects.filter(
+            author__following__user=request.user
         )
         return super(FollowList, self).dispatch(request, *args, **kwargs)
 
