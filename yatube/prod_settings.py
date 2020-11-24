@@ -1,4 +1,11 @@
+import environ
+
 from .settings import *
+
+env = environ.Env(
+    DEBUG=(bool, False))  # false default
+environ.Env.read_env(env_file='./.env')
+
 
 ALLOWED_HOSTS += [
     'krommclub.ru',
@@ -6,6 +13,11 @@ ALLOWED_HOSTS += [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-#TODO: change this!
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'info@krommclub.ru'
+EMAIL_HOST_PASSWORD = env('EMAIL_PSWD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
