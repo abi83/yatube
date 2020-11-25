@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -11,6 +13,8 @@ from django.views.generic.edit import UpdateView
 
 from .forms import PostForm, CommentForm
 from .models import Post, Group, Follow
+
+logger = logging.getLogger('yatube')
 
 
 class PostCreate(LoginRequiredMixin, View):
@@ -178,7 +182,7 @@ class GroupsList(ItemsListMixin, View):
 
 
 class ProfilesList(ItemsListMixin, View):
-    queryset = User.objects.exclude(posts=None, )
+    queryset = User.objects.exclude(posts=None, ).order_by('-pk')
     qs_name = 'users'
     template = 'posts/profiles_list.html'
 
@@ -192,19 +196,20 @@ class IndexList(ItemsListMixin, View):
 
 
 class FollowList(LoginRequiredMixin, ItemsListMixin, View):
-    def dispatch(self, request, *args, **kwargs):
+    qs_name = 'posts'
+    template = 'posts/follow.html'
+
+    def get(self, request):
         self.queryset = Post.objects.filter(
             author__following__user=request.user
         )
-        return super(FollowList, self).dispatch(request, *args, **kwargs)
-
-    qs_name = 'posts'
-    template = 'posts/follow.html'
+        return super(FollowList, self).get(request)
 
 
 class Handler404(View):
     @staticmethod
     def get(request, exception):  # noqa
+        logger.warning("404: page not found at {}".format(request.path))
         return render(request, 'misc/404.html',
                       {'path': request.path}, status=404)
 
@@ -212,4 +217,5 @@ class Handler404(View):
 class Handler500(View):
     @staticmethod
     def dispatch(request, *args, **kwargs):
+        logger.error("500: page is broken {}".format(request.path))
         return render(request, 'misc/500.html', status=500)

@@ -31,8 +31,17 @@ ENV/
 env.bak/
 .idea
 
+#cache
 */*/*/__pycache__/
 */*/__pycache__/
 */__pycache__/
 
+#Default database
 db.sqlite3
+
+#coverage data
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover

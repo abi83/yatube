@@ -5,12 +5,11 @@ env = environ.Env(
     DEBUG=(bool, False))  # false default
 environ.Env.read_env(env_file='./.env')
 
+DEBUG = False
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = env('SECRET_KEY')
-
-DEBUG = env.bool('DEBUG')
 
 CSRF_COOKIE_SECURE = True
 

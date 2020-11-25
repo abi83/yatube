@@ -1,5 +1,7 @@
 from .settings import *
 
+# DEBUG = True
+
 ALLOWED_HOSTS += [
     '127.0.0.1',
     "testserver",
@@ -25,3 +27,28 @@ MIDDLEWARE += [
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'C:\\python\\app\\logging\\log.log',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'yatube': {
+            'handlers': ['file',],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        }
+    },
+}

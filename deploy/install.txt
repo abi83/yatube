@@ -2,8 +2,8 @@
 2.  python -m virtualenv venv
 3.  source venv/bin/activate
 4.  pip3 install -r requirements.txt
-5.  Then configure your nginx and uwsgi services. See config examples and good manual at
-https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-debian-8
+5.  Then configure your nginx and uwsgi services. See config examples at deploy directory
+and good manual at https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-debian-8
 6.  Create .env file in root directory. See .env.example
 7.  Create and configure your database or use sqlite3 by default
 8.  python manage.py migrate
