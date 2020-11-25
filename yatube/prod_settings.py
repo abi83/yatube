@@ -21,3 +21,5 @@ EMAIL_HOST_PASSWORD = env('EMAIL_PSWD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+LOGGING['handlers']['file']['filename'] = '/home/abi83/krommclub.ru/logging/log.log'

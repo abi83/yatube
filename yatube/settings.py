@@ -87,6 +87,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '',  # set in local_settings or prod_settings
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'yatube': {
+            'handlers': ['file',],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
+        }
+    },
+}
+
 LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Asia/Novosibirsk'
