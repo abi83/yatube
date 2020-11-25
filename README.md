@@ -1,4 +1,5 @@
-For english see: README.en.md
+For english see: README.en.md:
+[https://github.com/abi83/yatube/blob/master/README.en.md]
 
 _**Yatube** - учебный проект, сделанный мною в октябре-ноябре 2020 года в рамках 
 курса python-разработчик в Яндекс.Практикум_
@@ -25,3 +26,5 @@ https://github.com/abi83/YaPractice/tree/master/Yatube
 
 Надеюсь проект поможет следующим поколениям Яндекс.Практики и просто изучающим Python
  
+
+[]: https://github.com/abi83/yatube/blob/master/README.en.md
