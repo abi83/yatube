@@ -24,6 +24,3 @@ https://github.com/abi83/YaPractice/tree/master/Yatube
 В папке deploy небольшая инструкиця по установке проекта и примеры .env и конфигурационных файлов
 
 Надеюсь проект поможет следующим поколениям Яндекс.Практики и просто изучающим Python
- 
-
-[]: https://github.com/abi83/yatube/blob/master/README.en.md
