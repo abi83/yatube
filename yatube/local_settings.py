@@ -1,22 +1,13 @@
 from .settings import *
 
-# DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS += [
     '127.0.0.1',
     "testserver",
 ]
-# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'info@krommclub.ru'
-EMAIL_HOST_PASSWORD = env('EMAIL_PSWD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Always use IPython for shell_plus
 SHELL_PLUS = 'ipython'
