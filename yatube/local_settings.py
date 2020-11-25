@@ -6,8 +6,17 @@ ALLOWED_HOSTS += [
     '127.0.0.1',
     "testserver",
 ]
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'info@krommclub.ru'
+EMAIL_HOST_PASSWORD = env('EMAIL_PSWD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 # Always use IPython for shell_plus
 SHELL_PLUS = 'ipython'
@@ -27,31 +36,6 @@ MIDDLEWARE += [
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.FileHandler',
-#             'filename': 'C:\\python\\app\\logging\\log.log',
-#             'formatter': 'verbose',
-#         },
-#     },
-#     'loggers': {
-#         'yatube': {
-#             'handlers': ['file',],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-#     'formatters': {
-#         'verbose': {
-#             'format': '%(levelname)s %(asctime)s %(module)s: %(message)s'
-#         }
-#     },
-# }
 
 LOGGING['handlers']['file']['level'] = 'DEBUG'
 LOGGING['handlers']['file']['filename'] = 'C:\\python\\app\\logging\\log.log'

@@ -10,6 +10,7 @@ environ.Env.read_env(env_file='./.env')
 ALLOWED_HOSTS += [
     'krommclub.ru',
 ]
+DEBUG = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
