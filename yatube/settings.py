@@ -1,3 +1,8 @@
+"""
+Here are some base settings, common for local machine and production server.
+This file is imported from local_settings.py or prod_settings.py
+"""
+
 import environ
 import os
 
