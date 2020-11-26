@@ -76,12 +76,12 @@ class ViewsTests(TestCase):
         at posts page, author profile page, simple post and group pages
         """
         cache.clear()
-        for url in self.post_check_urls:
+        for url in ViewsTests.post_check_urls:
             with self.subTest(url=url):
-                response = self.unauthorized_client.get(url)
+                response = ViewsTests.unauthorized_client.get(url)
                 self.assertTrue(
-                    (self.first_post == response.context['post']) or
-                    (self.first_post in response.context['posts']),
+                    (ViewsTests.first_post == response.context['post']) or
+                    (ViewsTests.first_post in response.context['posts']),
                     f'Page {url} dosnt contains post text')
 
     def test_img_tag_on_all_pages(self):
@@ -89,20 +89,20 @@ class ViewsTests(TestCase):
         Checks <img> tag with "card-img" class in list of pages
         """
         cache.clear()
-        for url in self.post_check_urls:
+        for url in ViewsTests.post_check_urls:
             with self.subTest(url=url):
-                response = self.unauthorized_client.get(url)
+                response = ViewsTests.unauthorized_client.get(url)
                 self.assertContains(response, '<img class="card-img"')
 
     def test_cache_index_page(self):
         """
         Checking correct cache work on index page
         """
-        response_one = self.unauthorized_client.get(reverse('posts'))
-        Post.objects.create(text='Cache check', author=self.first_user)
-        response_two = self.unauthorized_client.get(reverse('posts'))
+        response_one = ViewsTests.unauthorized_client.get(reverse('posts'))
+        Post.objects.create(text='Cache check', author=ViewsTests.first_user)
+        response_two = ViewsTests.unauthorized_client.get(reverse('posts'))
         cache.clear()
-        response_three = self.unauthorized_client.get(reverse('posts'))
+        response_three = ViewsTests.unauthorized_client.get(reverse('posts'))
         self.assertEqual(response_one.content, response_two.content,
                          'Cache doesnt work')
         self.assertNotEqual(response_two.content, response_three.content,
@@ -112,17 +112,17 @@ class ViewsTests(TestCase):
         """
         Testing first_group appears on groups page
         """
-        response = self.unauthorized_client.get(reverse('groups'))
-        self.assertContains(response, self.first_group.title)
-        self.assertContains(response, self.first_group.description)
+        response = ViewsTests.unauthorized_client.get(reverse('groups'))
+        self.assertContains(response, ViewsTests.first_group.title)
+        self.assertContains(response, ViewsTests.first_group.description)
 
     def test_authors_page(self):
         """
         Testing first_user appears on authors page
         """
-        response = self.unauthorized_client.get(reverse('authors'))
-        self.assertContains(response, self.first_user.first_name)
-        self.assertContains(response, self.first_user.last_name)
+        response = ViewsTests.unauthorized_client.get(reverse('authors'))
+        self.assertContains(response, ViewsTests.first_user.first_name)
+        self.assertContains(response, ViewsTests.first_user.last_name)
 
     def test_unauthorised_user_new_comment_redirect(self):
         """
@@ -130,19 +130,19 @@ class ViewsTests(TestCase):
         with unauthorised client
         """
         target_url = reverse('login')+'?next='+reverse(
-            'add-comment', args=[self.first_post.author.username,
-                                 self.first_post.pk])
+            'add-comment', args=[ViewsTests.first_post.author.username,
+                                 ViewsTests.first_post.pk])
         comments_count = Comment.objects.all().count()
         responses = {
-            'get': self.unauthorized_client.get(
+            'get': ViewsTests.unauthorized_client.get(
                 reverse('add-comment', args=[
-                    self.first_post.author.username,
-                    self.first_post.pk]),
+                    ViewsTests.first_post.author.username,
+                    ViewsTests.first_post.pk]),
                 follow=False),
-            'post': self.unauthorized_client.post(
+            'post': ViewsTests.unauthorized_client.post(
                 reverse('add-comment', args=[
-                    self.first_post.author.username,
-                    self.first_post.pk]),
+                    ViewsTests.first_post.author.username,
+                    ViewsTests.first_post.pk]),
                 {'text': 'Test unauthorized user new comment'},
                 follow=False)}
         for response in responses.values():

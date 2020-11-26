@@ -55,11 +55,11 @@ class FormsTests(TestCase):
         """
         Testing if post-edit page saves data in database
         """
-        post_to_edit = self.first_user.posts.first()
+        post_to_edit = FormsTests.first_user.posts.first()
         new_group = Group.objects.create(title='One more', slug='one_more')
         new_text = str(uuid1())
-        self.authorized_client.post(
-            reverse('post-edit', args=[self.first_user.username,
+        FormsTests.authorized_client.post(
+            reverse('post-edit', args=[FormsTests.first_user.username,
                                        post_to_edit.pk], ),
             {'text': new_text, 'group': new_group.pk, },
             follow=True)
@@ -74,16 +74,16 @@ class FormsTests(TestCase):
         Authorised user can create posts with 'new-post' page
         """
         new_post_text = str(uuid1())
-        response = self.authorized_client.post(
+        response = FormsTests.authorized_client.post(
             reverse('new-post'),
             {'text': new_post_text,
-             'group': self.first_group.pk, },
+             'group': FormsTests.first_group.pk, },
             follow=True)
         matches = 0
         for post in response.context['posts']:
             if (post.text == new_post_text and
-                post.group == self.first_group and
-                post.author == self.first_user):
+                post.group == FormsTests.first_group and
+                post.author == FormsTests.first_user):
                 matches += 1
         self.assertEqual(matches, 1, 'Something wrong with new-post page')
 
@@ -98,7 +98,7 @@ class FormsTests(TestCase):
         cashed_text = Post.objects.get(pk=tested_post.pk).text
         target_url = reverse('post', args=[tested_post.author.username,
                                            tested_post.pk])
-        response = self.authorized_client.post(
+        response = FormsTests.authorized_client.post(
             reverse('post-edit', args=[tested_post.author.username,
                                        tested_post.pk]),
             {'text': 'Trying to edit', },
@@ -115,9 +115,9 @@ class FormsTests(TestCase):
         add-comment page
         """
         comment_text = str(uuid1())
-        response = self.authorized_client.post(
-            reverse('add-comment', args=[self.first_post.author.username,
-                                         self.first_post.pk]),
+        response = FormsTests.authorized_client.post(
+            reverse('add-comment', args=[FormsTests.first_post.author.username,
+                                         FormsTests.first_post.pk]),
             {'text': comment_text},
             follow=True)
         self.assertIn(
@@ -132,20 +132,20 @@ class FormsTests(TestCase):
         """
         # Deleting current following object if exists
         Follow.objects.filter(
-            author=self.followed_user, user=self.first_user).delete()
+            author=FormsTests.followed_user, user=FormsTests.first_user).delete()
         with self.subTest(msg='Follow button'):
-            self.authorized_client.get(
-                reverse('profile-follow', args=[self.followed_user.username]))
+            FormsTests.authorized_client.get(
+                reverse('profile-follow', args=[FormsTests.followed_user.username]))
             self.assertTrue(
-                Follow.objects.filter(author=self.followed_user,
-                                      user=self.first_user).exists(),
+                Follow.objects.filter(author=FormsTests.followed_user,
+                                      user=FormsTests.first_user).exists(),
                 'Follow button works incorrectly')
         with self.subTest(msg='Unfollow button'):
-            self.authorized_client.get(
-                reverse('profile-unfollow', args=[self.followed_user.username]))
+            FormsTests.authorized_client.get(
+                reverse('profile-unfollow', args=[FormsTests.followed_user.username]))
             self.assertFalse(
-                Follow.objects.filter(author=self.followed_user,
-                                      user=self.first_user).exists(),
+                Follow.objects.filter(author=FormsTests.followed_user,
+                                      user=FormsTests.first_user).exists(),
                 'Unfollow button works incorrectly')
 
     def test_followed_authors_post_appears_in_follow_list(self):
@@ -153,21 +153,21 @@ class FormsTests(TestCase):
         Checking if followed author post correctly appears on follow page
         """
         tested_post = Post.objects.create(
-            text=str(uuid1()), author=self.followed_user)
+            text=str(uuid1()), author=FormsTests.followed_user)
         with self.subTest(
                 msg='Check followed author post at follow_index page'):
             Follow.objects.get_or_create(
-                author=self.followed_user, user=self.first_user)
-            response = self.authorized_client.get(reverse('follow_index'))
+                author=FormsTests.followed_user, user=FormsTests.first_user)
+            response = FormsTests.authorized_client.get(reverse('follow_index'))
             self.assertIn(
                 tested_post.text,
                 [post.text for post in response.context['posts']])
         with self.subTest(
                 msg='Check unfollowed author post at follow_index page'):
             Follow.objects.filter(
-                author=self.followed_user,
-                user=self.first_user).delete()
-            response = self.authorized_client.get(reverse('follow_index'))
+                author=FormsTests.followed_user,
+                user=FormsTests.first_user).delete()
+            response = FormsTests.authorized_client.get(reverse('follow_index'))
             self.assertNotIn(
                 tested_post.text,
                 [post.text for post in response.context['posts']])
@@ -178,16 +178,15 @@ class FormsTests(TestCase):
         """
         post_text = str(uuid1())
         pic_file_name = str(uuid1()) + '.gif'
-        # anyway I couldn't feed a PIL Image object to SimpleUploadFile
         small_gif = (
             b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04'
             b'\x01\x0a\x00\x01\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02'
             b'\x02\x4c\x01\x00\x3b'
         )
-        self.authorized_client.post(
+        FormsTests.authorized_client.post(
             reverse('new-post'),
             {'text': post_text,
-             'group': self.first_group.pk,
+             'group': FormsTests.first_group.pk,
              'image': SimpleUploadedFile(name=pic_file_name,
                                          content=small_gif,
                                          content_type='image/gif')
@@ -202,10 +201,10 @@ class FormsTests(TestCase):
         Testing create post form with txt file
         """
         post_text = str(uuid1())
-        response = self.authorized_client.post(
+        response = FormsTests.authorized_client.post(
             reverse('new-post'),
             {'text': post_text,
-             'group': self.first_group.pk,
+             'group': FormsTests.first_group.pk,
              'image': SimpleUploadedFile(name='test_txt.txt',
                                          content=b'These are the file contents',
                                          content_type='text/plain'),

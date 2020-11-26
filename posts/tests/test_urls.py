@@ -20,7 +20,7 @@ class URLTests(TestCase):
         """
         Checking 200 answer directly at '/'
         """
-        response = self.unauthorized_client.get('')
+        response = URLTests.unauthorized_client.get('')
         self.assertEqual(response.status_code, 200)
 
     def test_unauthorized_user_new_post(self):
@@ -32,9 +32,9 @@ class URLTests(TestCase):
         post_count = Post.objects.count()
         posts_before_test = list(Post.objects.order_by('pk').all())
         responses = {
-            'get': self.unauthorized_client.get(
+            'get': URLTests.unauthorized_client.get(
                 reverse('new-post'), follow=False),
-            'post': self.unauthorized_client.post(
+            'post': URLTests.unauthorized_client.post(
                 reverse('new-post'),
                 {'text': 'Test unauthorized user new post'}, follow=False)}
         for response in responses.values():
@@ -54,7 +54,7 @@ class URLTests(TestCase):
         """
         user404 = str(uuid1())[:5]
         id404 = randint(1000,2000)
-        response = self.unauthorized_client.get(
+        response = URLTests.unauthorized_client.get(
             reverse('post', args=[user404, id404])
         )
         self.assertEqual(response.status_code, 404)
