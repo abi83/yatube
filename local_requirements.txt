@@ -1,4 +1,4 @@
-# Additional pacjages useful for development
+# Additional packages useful for development
 django-extensions
 ipython
 django-debug-toolbar      # debug
