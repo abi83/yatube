@@ -30,3 +30,9 @@ INTERNAL_IPS = [
 
 LOGGING['handlers']['file']['level'] = 'DEBUG'
 LOGGING['handlers']['file']['filename'] = 'C:\\python\\app\\logging\\log.log'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
