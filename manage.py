@@ -20,7 +20,6 @@ def main():
 
 
 if __name__ == '__main__':
-    env = environ.Env(
-        DEBUG=(bool, False))  # false default
+    env = environ.Env()
     environ.Env.read_env(env_file='.env')
     main()

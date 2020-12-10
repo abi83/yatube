@@ -2,9 +2,9 @@
 
 from .settings import *
 
-env = environ.Env(
-    DEBUG=(bool, False))  # false default
-environ.Env.read_env(env_file='./.env')
+# env = environ.Env(
+#     DEBUG=(bool, False))  # false default
+# environ.Env.read_env(env_file='./.env')
 
 
 ALLOWED_HOSTS += [
